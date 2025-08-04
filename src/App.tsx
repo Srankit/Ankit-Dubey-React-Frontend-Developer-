@@ -4,7 +4,6 @@ import { ThemeProvider } from './component/contexts/ThemeContext';
 import './index.css'
 import './component/styles/themes.css';
 import Header from './component/Header';
-import Navbar from './component/Navbar';
 import Home from './component/pages/Home';
 import About from './component/pages/About';
 import Contact from './component/pages/Contact';
@@ -17,7 +16,7 @@ const App: React.FC = () => {
       <Router>
         <div className="flex flex-col min-h-screen transition-colors duration-300">
           <Header />
-          <Navbar />
+          
           <main className="flex-grow">
             <Routes>
               <Route path="/" element={<Home />} />
