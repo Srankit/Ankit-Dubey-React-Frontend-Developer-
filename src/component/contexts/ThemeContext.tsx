@@ -1,10 +1,13 @@
-import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import type { ReactNode } from 'react';
+import type { JSX } from 'react'; 
 
 type Theme = 'theme1' | 'theme2' | 'theme3';
 
 interface ThemeContextType {
   theme: Theme;
   setTheme: (theme: Theme) => void;
+  themeIcon: JSX.Element; // ✅ now JSX.Element, not string
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -29,8 +32,24 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     document.documentElement.className = theme;
   }, [theme]);
 
+  // ✅ JSX icon component (emoji wrapped in span)
+  const getThemeIcon = (): JSX.Element => {
+    switch (theme) {
+      case 'theme1':
+        return <span role="img" aria-label="sun" className="text-2xl"></span>;
+      case 'theme2':
+        return <span role="img" aria-label="moon" className="text-2xl"></span>;
+      case 'theme3':
+        return <span role="img" aria-label="contrast" className="text-2xl"></span>;
+      default:
+        return <span role="img" aria-label="sun" className="text-2xl"></span>;
+    }
+  };
+
+  const themeIcon = getThemeIcon();
+
   return (
-    <ThemeContext.Provider value={{ theme, setTheme: handleSetTheme }}>
+    <ThemeContext.Provider value={{ theme, setTheme: handleSetTheme, themeIcon }}>
       {children}
     </ThemeContext.Provider>
   );
